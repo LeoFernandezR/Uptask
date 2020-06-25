@@ -1,19 +1,19 @@
-<?php 
+<?php
 $accion = $_POST['accion'];
 $id_tarea = (int) $_POST['id_tarea'];
 
-if($accion === "eliminar") {
-    include '../funciones/conexion.php';
+if ($accion === "eliminar") {
+    include '../funciones/bd_conexion.php';
 
     try {
         $stmt = $conn->prepare("DELETE FROM tareas WHERE id = ?");
         $stmt->bind_param('i', $id_tarea);
         $stmt->execute();
-        if($stmt->affected_rows > 0) {
+        if ($stmt->affected_rows > 0) {
             $respuesta = array(
                 'respuesta' => 'correcto'
             );
-        }else {
+        } else {
             $repuesta = array(
                 'respuesta' => 'error'
             );
@@ -26,5 +26,5 @@ if($accion === "eliminar") {
         );
     }
    
-   echo json_encode($respuesta);
+    echo json_encode($respuesta);
 }

@@ -4,30 +4,30 @@ $accion = $_POST['accion'];
 $password = $_POST['password'];
 $usuario = $_POST['usuario'];
 
-if($accion === 'crear') {
- //Código para crear los administradores 
+if ($accion === 'crear') {
+    //Código para crear los administradores
  
 
- //hashear passwords
+    //hashear passwords
     $opciones = array(
         'cost' => 12
     );
     $hash_password = password_hash($password, PASSWORD_BCRYPT, $opciones);
 
     //importar la conexion
-    include '../funciones/conexion.php';
+    include '../funciones/bd_conexion.php';
 
     try {
         $stmt = $conn->prepare('INSERT INTO usuarios (usuario, password) VALUES (?, ?)');
         $stmt->bind_param('ss', $usuario, $hash_password);
         $stmt->execute();
-        if($stmt->affected_rows > 0) {
+        if ($stmt->affected_rows > 0) {
             $respuesta = array(
                 'respuesta' => 'correcto',
                 'id_insertado' => $stmt->insert_id,
                 'tipo' => $accion
             );
-        }else {
+        } else {
             $repuesta = array(
                 'respuesta' => 'error'
             );
@@ -40,13 +40,13 @@ if($accion === 'crear') {
         );
     }
 
-echo json_encode($respuesta);
+    echo json_encode($respuesta);
 }
 
 
-if($accion === 'login') {
+if ($accion === 'login') {
     //escribir codigo para que logueen los administradores
-    include '../funciones/conexion.php';
+    include '../funciones/bd_conexion.php';
 
     try {
         $stmt = $conn->prepare('SELECT usuario, id, password FROM usuarios WHERE usuario = ?');
@@ -54,8 +54,8 @@ if($accion === 'login') {
         $stmt->execute();
         $stmt->bind_result($nombre_usuario, $id_usuario, $pass_usuario);
         $stmt->fetch();
-        if($nombre_usuario) {
-            if(password_verify($password, $pass_usuario )) {
+        if ($nombre_usuario) {
+            if (password_verify($password, $pass_usuario)) {
                 //iniciamos la sesion
                 session_start();
                 $_SESSION['nombre'] = $usuario;
