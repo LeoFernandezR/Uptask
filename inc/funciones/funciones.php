@@ -1,15 +1,17 @@
 <?php
 //Obtiene la pagina actual que se ejecuta
-function obtenerPaginaActual() {
+function obtenerPaginaActual()
+{
     $archivo = basename($_SERVER['PHP_SELF']);
     $pagina = str_replace('.php', '', $archivo);
     return $pagina;
 };
 /* CONSULTAS */
 
-// Obtener todos los proyectos 
-function obtenerProyectos() {
-    include 'conexion.php';
+// Obtener todos los proyectos
+function obtenerProyectos()
+{
+    include '../funciones/bd_conexion.php';
     try {
         return $conn->query('SELECT id, nombre FROM proyectos');
     } catch (Exception $e) {
@@ -17,21 +19,23 @@ function obtenerProyectos() {
         return false;
     }
 }
-//Obtener el nombre del Proyecto 
-function obtenerNombreProyecto($id = null) {
-    include 'conexion.php';
+//Obtener el nombre del Proyecto
+function obtenerNombreProyecto($id = null)
+{
+    include '../funciones/bd_conexion.php';
     try {
-    return $conn->query("SELECT nombre FROM proyectos WHERE id = {$id}");
+        return $conn->query("SELECT nombre FROM proyectos WHERE id = {$id}");
     } catch (Exception $e) {
         echo "Error! : " . $e->getMessage();
         return false;
     }
 }
 //Obtener las clases del proyecto
-function obtenerTareasProyecto($id = null) {
-    include 'conexion.php';
+function obtenerTareasProyecto($id = null)
+{
+    include '../funciones/bd_conexion.php';
     try {
-    return $conn->query("SELECT id, nombre, estado FROM tareas WHERE id_proyecto = {$id}");
+        return $conn->query("SELECT id, nombre, estado FROM tareas WHERE id_proyecto = {$id}");
     } catch (Exception $e) {
         echo "Error! : " . $e->getMessage();
         return false;
