@@ -11,7 +11,7 @@ function obtenerPaginaActual()
 // Obtener todos los proyectos
 function obtenerProyectos()
 {
-    include '../funciones/bd_conexion.php';
+    include 'bd_conexion.php';
     try {
         return $conn->query('SELECT id, nombre FROM proyectos');
     } catch (Exception $e) {
@@ -22,7 +22,7 @@ function obtenerProyectos()
 //Obtener el nombre del Proyecto
 function obtenerNombreProyecto($id = null)
 {
-    include '../funciones/bd_conexion.php';
+    include 'bd_conexion.php';
     try {
         return $conn->query("SELECT nombre FROM proyectos WHERE id = {$id}");
     } catch (Exception $e) {
@@ -33,7 +33,7 @@ function obtenerNombreProyecto($id = null)
 //Obtener las clases del proyecto
 function obtenerTareasProyecto($id = null)
 {
-    include '../funciones/bd_conexion.php';
+    include 'bd_conexion.php';
     try {
         return $conn->query("SELECT id, nombre, estado FROM tareas WHERE id_proyecto = {$id}");
     } catch (Exception $e) {
